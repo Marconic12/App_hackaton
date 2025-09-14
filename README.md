@@ -1,3 +1,3 @@
 # app_hackaton
 
-A new Flutter project.
+Proyecto en progreso para participar en el evento HACKATON
