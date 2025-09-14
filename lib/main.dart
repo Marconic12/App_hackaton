@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hackaton_fitness/core/app_color.dart';
-import 'package:hackaton_fitness/screens/home_page.dart';
-import 'package:hackaton_fitness/screens/setting.dart';
+import 'package:app_hackaton/core/app_color.dart';
+import 'package:app_hackaton/screens/home_page.dart';
+import 'package:app_hackaton/screens/setting.dart';
 
 void main() {
   runApp(const MainApp());
