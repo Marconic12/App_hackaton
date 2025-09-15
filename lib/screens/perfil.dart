@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hackaton_fitness/core/app_color.dart';
+import 'package:victor_appl_maro/core/app_color.dart';
 
 class Perfil extends StatefulWidget {
   const Perfil({super.key});

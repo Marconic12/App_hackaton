@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hackaton_fitness/components/app_bar.dart';
-import 'package:hackaton_fitness/components/consejos_wild.dart';
-import 'package:hackaton_fitness/components/peso_imc.dart';
-import 'package:hackaton_fitness/core/app_color.dart';
-import 'package:hackaton_fitness/components/chat_bot.dart'; 
+import 'package:victor_appl_maro/components/app_bar.dart';
+import 'package:victor_appl_maro/components/consejos_wild.dart';
+import 'package:victor_appl_maro/components/peso_imc.dart';
+import 'package:victor_appl_maro/core/app_color.dart';
+import 'package:victor_appl_maro/components/chat_bot.dart'; 
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
