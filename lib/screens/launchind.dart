@@ -67,10 +67,10 @@ class _SplashScreenState extends State<SplashScreen>
           builder: (context) => const Scaffold(
             backgroundColor: Color.fromARGB(255, 158, 158, 158),
             body: Center(
-              child: SingleChildScrollView(
+              child: Center(
                 child: Padding(
                   padding: EdgeInsets.all(20.0),
-                  child: RegisterForm(),
+                  child: WelcomeScreen(),
                 ),
               ),
             ),
