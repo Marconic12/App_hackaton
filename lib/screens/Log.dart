@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'Account.dart'; 
-
 class AccountCreationOptionScreen extends StatelessWidget {
-  const AccountCreationOptionScreen({super.key});
+  final Map<String, dynamic> userProfileData;
+
+  const AccountCreationOptionScreen({super.key, required this.userProfileData});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class AccountCreationOptionScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 50),
-              // Opción "Crear una cuenta"
+              
               _buildOptionCard(
                 context,
                 title: 'Crear una cuenta',
@@ -38,18 +39,21 @@ class AccountCreationOptionScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const CreateAccountScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => CreateAccountScreen(userProfileData: userProfileData),
+                    ),
                   );
                 },
               ),
               const SizedBox(height: 20),
-              // Opción "Omitir"
+              
               _buildOptionCard(
                 context,
                 title: 'Omitir por ahora',
                 icon: Icons.fast_forward,
                 onTap: () {
-                  // Navega a la pantalla principal y elimina la pila de navegación
+                  
+
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     '/main',

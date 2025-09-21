@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'Goal.dart'; // ¡Importamos la nueva pantalla!
-
+import 'Goal.dart'; 
 class WeeklyWorkoutsScreen extends StatefulWidget {
-  const WeeklyWorkoutsScreen({super.key});
+
+  final Map<String, dynamic> userProfileData;
+
+  const WeeklyWorkoutsScreen({super.key, required this.userProfileData});
 
   @override
   State<WeeklyWorkoutsScreen> createState() => _WeeklyWorkoutsScreenState();
@@ -46,10 +48,18 @@ class _WeeklyWorkoutsScreenState extends State<WeeklyWorkoutsScreen> {
               ElevatedButton(
                 onPressed: _selectedWorkouts != null
                     ? () {
-                        // Navegación a la nueva pantalla de objetivo
+                        
+                        final updatedData = Map<String, dynamic>.from(widget.userProfileData);
+
+                       
+                        updatedData['activity_level'] = _selectedWorkouts;
+
+                       
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const GoalScreen()),
+                          MaterialPageRoute(
+                            builder: (context) => GoalScreen(userProfileData: updatedData),
+                          ),
                         );
                       }
                     : null,

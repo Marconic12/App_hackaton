@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'WeeklyWorkout.dart'; // ¡Importamos la nueva pantalla!
+import 'WeeklyWorkout.dart'; 
 
 class HeightWeightScreen extends StatefulWidget {
-  const HeightWeightScreen({super.key});
+  
+  final Map<String, dynamic> userProfileData;
+
+  const HeightWeightScreen({super.key, required this.userProfileData});
 
   @override
   State<HeightWeightScreen> createState() => _HeightWeightScreenState();
@@ -57,10 +60,18 @@ class _HeightWeightScreenState extends State<HeightWeightScreen> {
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {
-                // Navegación a la nueva pantalla de entrenamientos
+                
+                
+                final updatedData = Map<String, dynamic>.from(widget.userProfileData);
+
+                
+                updatedData['height'] = _selectedHeight;
+                updatedData['weight'] = _selectedWeight;
+
+                
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const WeeklyWorkoutsScreen()),
+                  MaterialPageRoute(builder: (context) => WeeklyWorkoutsScreen(userProfileData: updatedData)),
                 );
               },
               style: ElevatedButton.styleFrom(

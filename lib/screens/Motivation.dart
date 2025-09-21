@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'Log.dart'; 
 
 class MotivationScreen extends StatefulWidget {
-  const MotivationScreen({super.key});
+
+  final Map<String, dynamic> userProfileData;
+
+  const MotivationScreen({super.key, required this.userProfileData});
 
   @override
   State<MotivationScreen> createState() => _MotivationScreenState();
@@ -64,10 +67,18 @@ class _MotivationScreenState extends State<MotivationScreen> {
               ElevatedButton(
                 onPressed: _selectedMotivation != null
                     ? () {
-                        // Navegación a la nueva pantalla de opción de cuenta
+                        
+                        final updatedData = Map<String, dynamic>.from(widget.userProfileData);
+                        
+                        
+                        updatedData['goal'] = _selectedMotivation;
+
+                        
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const AccountCreationOptionScreen()),
+                          MaterialPageRoute(
+                            builder: (context) => AccountCreationOptionScreen(userProfileData: updatedData),
+                          ),
                         );
                       }
                     : null,

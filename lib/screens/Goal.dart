@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:victor_appl_maro/screens/Motivation.dart';
 
 class GoalScreen extends StatefulWidget {
-  const GoalScreen({super.key});
+
+  final Map<String, dynamic> userProfileData;
+
+  const GoalScreen({super.key, required this.userProfileData});
 
   @override
   State<GoalScreen> createState() => _GoalScreenState();
@@ -46,10 +49,18 @@ class _GoalScreenState extends State<GoalScreen> {
               ElevatedButton(
                 onPressed: _selectedGoal != null
                     ? () {
-                        // Navegación a la nueva pantalla de motivación
+                      
+                        final updatedData = Map<String, dynamic>.from(widget.userProfileData);
+
+                        
+                        updatedData['goal'] = _selectedGoal;
+
+                        
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const MotivationScreen()),
+                          MaterialPageRoute(
+                            builder: (context) => MotivationScreen(userProfileData: updatedData),
+                          ),
                         );
                       }
                     : null,
@@ -105,8 +116,7 @@ class _GoalScreenState extends State<GoalScreen> {
               size: 40,
               color: isSelected ? Colors.blueAccent : Colors.black87,
             ),
-            const SizedBox(width: 20),
-            Text(
+            const SizedBox(width: 20),            Text(
               value,
               style: TextStyle(
                 fontSize: 20,

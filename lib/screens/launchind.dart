@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 3),
     );
 
-    // Animación del logo (0 a 1.5 segundos)
+    
     _logoScaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    // Animación de la barra superior (empieza en 1.0s hasta 2.0s)
+    
     _topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    // Animación de la barra inferior (empieza en 1.5s hasta 2.5s)
+    
     _bottomBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    // Después de 3 segundos, ir a Login
+    
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
@@ -89,10 +89,10 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 242, 242, 242), // Old Lace
+      backgroundColor: const Color.fromARGB(255, 242, 242, 242), 
       body: Stack(
         children: [
-          // Barra verde menta superior animada
+          
           Positioned(
             top: 0,
             left: 0,
@@ -101,7 +101,7 @@ class _SplashScreenState extends State<SplashScreen>
               animation: _topBarAnimation,
               builder: (context, child) {
                 return Container(
-                  height: 60 * _topBarAnimation.value, // Altura animada
+                  height: 60 * _topBarAnimation.value,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 23, 221, 244).withOpacity(0.9 * _bottomBarAnimation.value),
                     borderRadius: BorderRadius.only(
@@ -121,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           ),
 
-          // Logo centrado
+         
           Center(
             child: ScaleTransition(
               scale: _logoScaleAnimation,
@@ -137,7 +137,7 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           ),
 
-          // Barra verde menta inferior animada
+          
           Positioned(
             bottom: 0,
             left: 0,
@@ -146,7 +146,7 @@ class _SplashScreenState extends State<SplashScreen>
               animation: _bottomBarAnimation,
               builder: (context, child) {
                 return Container(
-                  height: 80 * _bottomBarAnimation.value, // Altura animada
+                  height: 80 * _bottomBarAnimation.value, 
                   decoration: BoxDecoration(
                      color: const Color.fromARGB(255, 23, 221, 244).withOpacity(0.9 * _bottomBarAnimation.value),
                     borderRadius: BorderRadius.only(

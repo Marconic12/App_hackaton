@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateAccountScreen extends StatefulWidget {
-  const CreateAccountScreen({super.key});
+  final Map<String, dynamic> userProfileData;
+
+  const CreateAccountScreen({super.key, required this.userProfileData});
 
   @override
   State<CreateAccountScreen> createState() => _CreateAccountScreenState();
@@ -20,14 +23,32 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     super.dispose();
   }
 
-  void _createAccount() {
+  
+  Future<void> _saveUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    
+    await prefs.setString('user_name', _usernameController.text);
+    await prefs.setString('user_email', _emailController.text);
+
+   
+    await prefs.setString('user_gender', widget.userProfileData['gender'] ?? 'No especificado');
+    await prefs.setInt('user_age', widget.userProfileData['age'] ?? 0);
+    await prefs.setString('user_conditions', widget.userProfileData['conditions'] ?? 'No especificado');
+    await prefs.setString('user_activity_level', widget.userProfileData['activity_level'] ?? 'No especificado');
+    await prefs.setString('user_goal', widget.userProfileData['goal'] ?? 'No especificado');
+  }
+
+  void _createAccount() async {
     final username = _usernameController.text;
     final email = _emailController.text;
     final password = _passwordController.text;
 
     if (username.isNotEmpty && email.isNotEmpty && password.isNotEmpty) {
       print('Cuenta creada: Username: $username, Email: $email');
-      // Navega a la pantalla principal y elimina la pila de navegación
+
+      await _saveUserData();
+
       Navigator.pushNamedAndRemoveUntil(
         context,
         '/main',
