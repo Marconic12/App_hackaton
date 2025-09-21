@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:victor_appl_maro/screens/GenderSelection.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -41,9 +42,10 @@ class WelcomeScreen extends StatelessWidget {
               // Botón de "Empezar"
               ElevatedButton(
                 onPressed: () {
-                  // Acción para ir a la pantalla de registro
-                  // Navigator.pushNamed(context, '/register');
-                  print('Empezar');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const GenderSelectionScreen()),
+                  );  
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,

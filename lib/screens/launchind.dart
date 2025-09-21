@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:victor_appl_maro/screens/login.dart';
+import 'package:victor_appl_maro/screens/Welcome.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -103,14 +103,14 @@ class _SplashScreenState extends State<SplashScreen>
                 return Container(
                   height: 60 * _topBarAnimation.value, // Altura animada
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(152, 251, 152, 1).withOpacity(0.9 * _topBarAnimation.value),
+                    color: const Color.fromARGB(255, 23, 221, 244).withOpacity(0.9 * _bottomBarAnimation.value),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20 * _topBarAnimation.value),
                       bottomRight: Radius.circular(20 * _topBarAnimation.value),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.green[200]!.withOpacity(0.5 * _topBarAnimation.value),
+                        color: Colors.lightBlue[200]!.withOpacity(0.5 * _topBarAnimation.value),
                         blurRadius: 10,
                         offset: const Offset(0, 3),
                       ),
@@ -148,14 +148,14 @@ class _SplashScreenState extends State<SplashScreen>
                 return Container(
                   height: 80 * _bottomBarAnimation.value, // Altura animada
                   decoration: BoxDecoration(
-                    color: const Color.fromRGBO(152, 251, 152, 1).withOpacity(0.9 * _bottomBarAnimation.value),
+                     color: const Color.fromARGB(255, 23, 221, 244).withOpacity(0.9 * _bottomBarAnimation.value),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20 * _bottomBarAnimation.value),
                       topRight: Radius.circular(20 * _bottomBarAnimation.value),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.green[200]!.withOpacity(0.5 * _bottomBarAnimation.value),
+                        color: Colors.lightBlue[200]!.withOpacity(0.5 * _bottomBarAnimation.value),
                         blurRadius: 10,
                         offset: const Offset(0, -3),
                       ),
