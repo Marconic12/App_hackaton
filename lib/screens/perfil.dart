@@ -42,12 +42,6 @@ class _PerfilState extends State<Perfil> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.fondito,
-      appBar: AppBar(
-        title: const Text('Mi Perfil', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-        centerTitle: true,
-        backgroundColor: AppColor.primary,
-        elevation: 0,
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
