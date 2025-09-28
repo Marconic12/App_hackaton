@@ -12,7 +12,7 @@ class PhysicalConditionScreen extends StatefulWidget {
 }
 
 class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
- 
+  
   final List<String> _commonConditions = [
     'Obesidad / Sobrepeso',
     'Diabetes Tipo 2',
@@ -21,10 +21,13 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
     'Hipertensión',
     'Ninguna'
   ];
-  final Set<String> _selectedConditions = {};
+  // *** CAMBIO REALIZADO AQUÍ (Línea 26) ***
+  // Inicializa con "Ninguna" para que el botón esté activo por defecto.
+  final Set<String> _selectedConditions = {'Ninguna'}; 
+  
   final TextEditingController _otherConditionController = TextEditingController();
 
-  // El getter se mantiene igual (Opción 2)
+  // El getter se mantiene igual
   bool get _isConditionSelected => 
     _selectedConditions.isNotEmpty || _otherConditionController.text.trim().isNotEmpty;
 
@@ -136,10 +139,10 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
                           ? const Icon(Icons.check_circle, color: Colors.white)
                           : null,
                       label: Text(condition, style: TextStyle(
-                        color: isSelected ? Colors.white : Colors.blueAccent,
+                        color: isSelected && condition != 'Ninguna' ? Colors.white : (isSelected && condition == 'Ninguna' ? Colors.white : Colors.blueAccent),
                         fontWeight: FontWeight.w600,
                       )),
-                      backgroundColor: isSelected ? Colors.blueAccent : Colors.blueAccent,
+                      backgroundColor: isSelected ? Colors.blueAccent : Colors.white, // Color de fondo diferente para deseleccionado
                       shape: StadiumBorder(
                         side: BorderSide(
                           color: isSelected ? Colors.blueAccent : Colors.blueAccent.shade200,
@@ -176,9 +179,9 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(color: Colors.deepOrange, width: 2.5),
+                      borderSide: const BorderSide(color: Colors.blueAccent, width: 2.5),
                     ),
-                    prefixIcon: const Icon(Icons.medical_services, color: Colors.deepOrange),
+                    prefixIcon: const Icon(Icons.medical_services, color: Colors.blueAccent),
                   ),
                 ),
               ),
@@ -191,7 +194,7 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
                 child: ElevatedButton(
                   onPressed: _isConditionSelected ? _navigateToNextScreen : null, 
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepOrange,
+                    backgroundColor: Colors.blueAccent,
                     foregroundColor: Colors.white,
                     disabledBackgroundColor: Colors.grey.shade400,
                     padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 50),

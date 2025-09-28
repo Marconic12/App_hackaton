@@ -4,6 +4,7 @@ import 'package:victor_appl_maro/components/app_bar.dart';
 import 'package:victor_appl_maro/components/peso_imc.dart';
 import 'package:victor_appl_maro/components/consejos_wild.dart';
 import 'package:victor_appl_maro/components/chat_bot.dart';
+import 'package:victor_appl_maro/screens/perfil.dart'; // Asegúrate de que ChatScreen esté importado si es de 'chat_bot.dart'
 
 
 class HomePage extends StatefulWidget {
@@ -18,7 +19,10 @@ class _HomePageState extends State<HomePage> {
     'weight': 70,
     'height': 170,
   };
-  
+  final double iconSize1 = 100;
+  final double buttonAreaSize1 = 110;  
+  final double iconSize = 60;
+  final double buttonAreaSize = 70; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,29 +30,49 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColor.background,
         elevation: 0,
         title: const SizedBox.shrink(),
-        leading: IconButton(
-          onPressed: () {},
-          icon: Image.asset(
-            'assets/icons/boton perfil.png',
-            height: 48,
-            width: 48,
-          ),
-          tooltip: 'Perfil',
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-               Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ChatScreen()),
-              );
-            },
+        
+        // 1. Botón de Perfil (leading)
+        leading: SizedBox( // Envuelve en SizedBox para darle más área
+          width: buttonAreaSize1,
+          height: buttonAreaSize1,
+          child: IconButton(
+            padding: EdgeInsets.zero, // Elimina el padding interno predeterminado
+            onPressed:() {
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Perfil()   ),
+            );  
+            },          
             icon: Image.asset(
-              'assets/icons/boton de chatbot.png',
-              height: 48,
-              width: 48,
+              'assets/icons/boton perfil.png',
+              height: iconSize1, // Establece el tamaño del icono
+              width: iconSize1,
             ),
-            tooltip: 'Chatbot',
+            tooltip: 'Perfil',
+          ),
+        ),
+        
+        actions: [
+          // 2. Botón de Chatbot (actions)
+          SizedBox( // Envuelve en SizedBox para darle más área
+            width: buttonAreaSize,
+            height: buttonAreaSize,
+            child: IconButton(
+              padding: EdgeInsets.zero, // Elimina el padding interno predeterminado
+              onPressed: () {
+                  Navigator.push(
+                  context,
+                  // Asumo que ChatScreen es el widget de la pantalla del chatbot
+                  MaterialPageRoute(builder: (context) => const ChatScreen()),
+                );
+              },
+              icon: Image.asset(
+                'assets/icons/boton de chatbot.png',
+                height: iconSize, // Establece el tamaño del icono
+                width: iconSize,
+              ),
+              tooltip: 'Chatbot',
+            ),
           ),
           const SizedBox(width: 10),
         ],

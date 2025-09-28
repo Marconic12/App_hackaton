@@ -39,8 +39,8 @@ class _MainScaffoldState extends State<MainScaffold> {
     const HomePage(),
     const Ajustes(),
     const Center(child: Text("Favoritos", style: TextStyle(fontSize: 24))),
-      const Center(child: Text("Calendario", style: TextStyle(fontSize: 24))),
-    const Perfil(), // Aquí reemplazamos el placeholder
+    const Center(child: Text("Calendario", style: TextStyle(fontSize: 24))),
+    const Perfil(), 
   ];
 
   void _onItemTapped(int index) {
@@ -49,20 +49,23 @@ class _MainScaffoldState extends State<MainScaffold> {
     });
   }
 
-  BottomNavigationBarItem _navItem(IconData icon, int index, {double size = 24}) {
+  // Altura personalizada más pequeña para la barra de navegación
+  static const double _customBarHeight = 50.0; // ¡Cambiado de kBottomNavigationBarHeight (56.0) a 50.0!
+
+  BottomNavigationBarItem _navItem(IconData icon, int index, {double size = 15}) {
     final bool isSelected = _selectedIndex == index;
 
     return BottomNavigationBarItem(
       icon: SizedBox(
-        height: kBottomNavigationBarHeight,
+        height: _customBarHeight, // <-- Se usa la altura personalizada
         child: Container(
           alignment: Alignment.center,
-          margin: const EdgeInsets.symmetric(horizontal: 2),
+          margin: const EdgeInsets.symmetric(horizontal: 1),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(6),
             border: Border.all(
               color: isSelected ? Colors.blue : Colors.grey,
-              width: 2,
+              width: 1,
             ),
             color: isSelected ? Colors.blue.withOpacity(0.1) : Colors.transparent,
           ),
@@ -84,17 +87,17 @@ class _MainScaffoldState extends State<MainScaffold> {
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        iconSize: 22,
+        iconSize: 15,
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
         items: [
-          _navItem(Icons.home, 0, size: 40),
-          _navItem(Icons.settings, 1, size: 40),
-          _navItem(Icons.calendar_month, 2, size: 40),
-          _navItem(Icons.favorite_border, 3, size: 40),
-          _navItem(Icons.lightbulb, 3, size: 40),
+          _navItem(Icons.home, 0, size: 24), // Reducido el tamaño del ícono
+          _navItem(Icons.settings, 1, size: 24), // Reducido el tamaño del ícono
+          _navItem(Icons.calendar_month, 2, size: 24), // Reducido el tamaño del ícono
+          _navItem(Icons.favorite_border, 3, size: 24), // Reducido el tamaño del ícono
+          _navItem(Icons.person, 4, size: 24), // IMPORTANTE: El índice de Perfil es 4
         ],
       ),
     );

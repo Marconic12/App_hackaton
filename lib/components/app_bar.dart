@@ -11,7 +11,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TextStyle? defaultTitleStyle;
   
   // Altura aumentada para el diseño original
-  static const double customHeight = 80;
+  static const double customHeight = 110.8;
 
   const CustomAppBar({
     super.key,
@@ -61,12 +61,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         // Propiedades adaptadas
         backgroundColor: backgroundColor,
         elevation: 0, 
-        automaticallyImplyLeading: false, // Controlamos el leading con nuestro widget
+        automaticallyImplyLeading: false, 
+        // Importante: también debemos aumentar la altura aquí para que el AppBar anidado no lo limite
+        toolbarHeight: customHeight, 
         title: centerTitle ? Center(child: styledTitle) : styledTitle,
-        leading: leading != null ? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: leading,
-        ) : null,
+        
+        // ¡CAMBIO CLAVE! Eliminamos el Padding extra.
+        leading: leading, 
+        
         actions: actions,
       ),
     );
