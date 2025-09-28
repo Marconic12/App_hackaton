@@ -1,17 +1,32 @@
 import 'package:flutter/material.dart';
 
 class PesoVisualizer extends StatefulWidget {
-  const PesoVisualizer({super.key});
+  final Map<String, dynamic> userProfileData;
+
+  const PesoVisualizer({
+    super.key,
+    required this.userProfileData,
+  });
 
   @override
   State<PesoVisualizer> createState() => _PesoVisualizerState();
 }
 
 class _PesoVisualizerState extends State<PesoVisualizer> {
-  double pesoKg = 68;
-  double alturaM = 1.70;
+  late double pesoKg;
+  late double alturaM;
 
   final List<Map<String, dynamic>> historial = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final int weightInt = widget.userProfileData['weight'] ?? 0;
+    pesoKg = weightInt.toDouble();
+
+    final int heightCm = widget.userProfileData['height'] ?? 1;
+    alturaM = heightCm / 100.0;
+  }
 
   double get pesoLb => pesoKg * 2.20462;
   double get imc => pesoKg / (alturaM * alturaM);
@@ -48,103 +63,96 @@ class _PesoVisualizerState extends State<PesoVisualizer> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text("Peso: ${pesoKg.toStringAsFixed(1)} kg",
-            style: const TextStyle(fontWeight: FontWeight.bold)),
-        Slider(
-          value: pesoKg,
-          min: 40,
-          max: 150,
-          divisions: 110,
-          label: '${pesoKg.toStringAsFixed(1)} kg',
-          onChanged: (value) => setState(() => pesoKg = value),
-        ),
-        Text("Altura: ${alturaM.toStringAsFixed(2)} m",
-            style: const TextStyle(fontWeight: FontWeight.bold)),
-        Slider(
-          value: alturaM,
-          min: 1.40,
-          max: 2.10,
-          divisions: 70,
-          label: '${alturaM.toStringAsFixed(2)} m',
-          onChanged: (value) => setState(() => alturaM = value),
-        ),
-        const SizedBox(height: 16),
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            // Peso
+            Text("Peso: ${pesoKg.toStringAsFixed(1)} kg",
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            Slider(
+              value: pesoKg,
+              min: 30,
+              max: 200,
+              divisions: 170,
+              label: "${pesoKg.toStringAsFixed(1)} kg",
+              onChanged: (value) => setState(() => pesoKg = value),
+            ),
 
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: const [
-              BoxShadow(
-                  color: Colors.black12, blurRadius: 6, offset: Offset(0, 3)),
-            ],
-          ),
-          child: Column(
-            children: [
-              const Text('Resultados',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Peso: ${pesoKg.toStringAsFixed(1)} kg'),
-                  Text('${pesoLb.toStringAsFixed(1)} lb'),
-                ],
+            // Altura
+            Text("Altura: ${alturaM.toStringAsFixed(2)} m",
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            Slider(
+              value: alturaM,
+              min: 1.2,
+              max: 2.2,
+              divisions: 100,
+              label: "${(alturaM * 100).toStringAsFixed(0)} cm",
+              onChanged: (value) => setState(() => alturaM = value),
+            ),
+
+            const SizedBox(height: 16),
+
+            // IMC
+            Text('IMC: ${imc.toStringAsFixed(1)}',
+                style: const TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.bold)),
+            Text('Categoría: $categoria',
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: categoriaColor)),
+
+            const SizedBox(height: 16),
+
+            // Botón de guardar
+            ElevatedButton.icon(
+              onPressed: guardarRegistro,
+              icon: const Icon(Icons.save),
+              label: const Text("Guardar registro"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
               ),
-              const SizedBox(height: 8),
-              Text('Altura: ${alturaM.toStringAsFixed(2)} m'),
-              const SizedBox(height: 16),
-              Text('IMC: ${imc.toStringAsFixed(1)}',
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              Text('Categoría: $categoria',
+            ),
+
+            const SizedBox(height: 20),
+
+            // Historial
+            if (historial.isNotEmpty) ...[
+              const Text("Historial de registros:",
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: categoriaColor)),
-              const SizedBox(height: 16),
-
-              // ✅ Botón para guardar el registro
-              ElevatedButton.icon(
-                onPressed: guardarRegistro,
-                icon: const Icon(Icons.save),
-                label: const Text("Guardar Registro"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green.shade600,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        const SizedBox(height: 20),
-
-        // ✅ Historial de registros guardados
-        if (historial.isNotEmpty)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Historial de registros:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
+                      fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 10),
-              ...historial.reversed.map((registro) => ListTile(
-                    leading: const Icon(Icons.check_circle, color: Colors.green),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: historial.length,
+                itemBuilder: (context, index) {
+                  final registro = historial[index];
+                  return ListTile(
+                    leading: const Icon(Icons.fitness_center),
                     title: Text(
-                        'Peso: ${registro['peso'].toStringAsFixed(1)} kg, Altura: ${registro['altura'].toStringAsFixed(2)} m'),
+                        "Peso: ${registro['peso'].toStringAsFixed(1)} kg | Altura: ${registro['altura'].toStringAsFixed(2)} m"),
                     subtitle: Text(
-                        'IMC: ${registro['imc'].toStringAsFixed(1)} (${registro['categoria']}) - ${registro['fecha'].toString().split(".")[0]}'),
-                  )),
+                        "IMC: ${registro['imc'].toStringAsFixed(1)} - ${registro['categoria']}"),
+                    trailing: Text(
+                      "${registro['fecha'].hour}:${registro['fecha'].minute.toString().padLeft(2, '0')}",
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  );
+                },
+              ),
             ],
-          ),
-
-        const SizedBox(height: 20),
-      ],
+          ],
+        ),
+      ),
     );
   }
 }

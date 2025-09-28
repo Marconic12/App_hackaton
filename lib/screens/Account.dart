@@ -15,109 +15,97 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  
   Future<void> _saveUserData() async {
-    final prefs = await SharedPreferences.getInstance();
+    // 1. VALIDACIÓN: Comprobar que los campos de la cuenta no estén vacíos.
+    if (_usernameController.text.isNotEmpty &&
+        _emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty) {
+      
+      final prefs = await SharedPreferences.getInstance();
 
-    
-    await prefs.setString('user_name', _usernameController.text);
-    await prefs.setString('user_email', _emailController.text);
+      // Datos de la cuenta
+      await prefs.setString('user_name', _usernameController.text);
+      await prefs.setString('user_email', _emailController.text);
+      // **Nota de seguridad:** Guardar contraseñas en SharedPreferences no es seguro.
+      // Considera usar FlutterSecureStorage o un servicio de autenticación.
+      await prefs.setString('user_password', _passwordController.text);
 
-   
-    await prefs.setString('user_gender', widget.userProfileData['gender'] ?? 'No especificado');
-    await prefs.setInt('user_age', widget.userProfileData['age'] ?? 0);
-    await prefs.setString('user_conditions', widget.userProfileData['conditions'] ?? 'No especificado');
-    await prefs.setString('user_activity_level', widget.userProfileData['activity_level'] ?? 'No especificado');
-    await prefs.setString('user_goal', widget.userProfileData['goal'] ?? 'No especificado');
-  }
+      // Datos del perfil (del flujo Onboarding)
+      if (widget.userProfileData.containsKey('gender')) {
+        await prefs.setString('user_gender', widget.userProfileData['gender']);
+      }
+      // Los datos numéricos deben convertirse al tipo correcto (int/double)
+      if (widget.userProfileData.containsKey('height')) {
+        await prefs.setInt('user_height', widget.userProfileData['height'] as int);
+      }
+      if (widget.userProfileData.containsKey('weight')) {
+        await prefs.setInt('user_weight', widget.userProfileData['weight'] as int);
+      }
+      if (widget.userProfileData.containsKey('age')) {
+        await prefs.setInt('user_age', widget.userProfileData['age'] as int);
+      }
+      if (widget.userProfileData.containsKey('activity_level')) {
+        await prefs.setString('user_activity_level', widget.userProfileData['activity_level']);
+      }
+      if (widget.userProfileData.containsKey('goal')) {
+        await prefs.setString('user_goal', widget.userProfileData['goal']);
+      }
+      if (widget.userProfileData.containsKey('motivation')) {
+        await prefs.setString('user_motivation', widget.userProfileData['motivation']);
+      }
 
-  void _createAccount() async {
-    final username = _usernameController.text;
-    final email = _emailController.text;
-    final password = _passwordController.text;
-
-    if (username.isNotEmpty && email.isNotEmpty && password.isNotEmpty) {
-      print('Cuenta creada: Username: $username, Email: $email');
-
-      await _saveUserData();
-
+      // Redirigir al Home o Dashboard
       Navigator.pushNamedAndRemoveUntil(
         context,
-        '/main',
+        '/main', // Asegúrate de que esta ruta esté definida en tu `MaterialApp`
         (Route<dynamic> route) => false,
       );
     } else {
+      // Mostrar SnackBar si la validación falla
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor, completa todos los campos')),
+        const SnackBar(content: Text('Por favor, completa todos los campos para crear la cuenta.')),
       );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crear Cuenta', style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
+        title: const Text("Crear cuenta"),
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Crea una cuenta',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 40),
             TextField(
               controller: _usernameController,
-              decoration: const InputDecoration(
-                labelText: 'Nombre de usuario',
-                border: OutlineInputBorder(),
-              ),
+              decoration: const InputDecoration(labelText: "Nombre de usuario"),
             ),
-            const SizedBox(height: 20),
             TextField(
               controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Correo electrónico',
-                border: OutlineInputBorder(),
-              ),
+              decoration: const InputDecoration(labelText: "Correo electrónico"),
+              keyboardType: TextInputType.emailAddress, // Mejor práctica para correos
             ),
-            const SizedBox(height: 20),
             TextField(
               controller: _passwordController,
+              decoration: const InputDecoration(labelText: "Contraseña"),
               obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'Contraseña',
-                border: OutlineInputBorder(),
-              ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: _createAccount,
+              onPressed: _saveUserData,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               ),
-              child: const Text('Crear cuenta'),
-            ),
+              child: const Text("Guardar cuenta"),
+            )
           ],
         ),
       ),

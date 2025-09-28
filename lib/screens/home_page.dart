@@ -3,7 +3,8 @@ import 'package:victor_appl_maro/components/app_bar.dart';
 import 'package:victor_appl_maro/components/consejos_wild.dart';
 import 'package:victor_appl_maro/components/peso_imc.dart';
 import 'package:victor_appl_maro/core/app_color.dart';
-import 'package:victor_appl_maro/components/chat_bot.dart'; 
+import 'package:victor_appl_maro/components/chat_bot.dart';
+import 'package:victor_appl_maro/screens/HeightWeight.dart'; // Importa la pantalla de altura y peso
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +14,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // Mapa para almacenar los datos del usuario
+  Map<String, dynamic> _userProfileData = {
+    'weight': 70,  // valor por defecto
+    
+    'height': 170, // valor por defecto
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +43,10 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(height: 8),
                       textoCentral(),
                       const SizedBox(height: 50),
-                      PesoVisualizer(),
+
+                      // PesoVisualizer ahora usa los datos dinámicos
+                      PesoVisualizer(userProfileData: _userProfileData),
+
                       const SizedBox(height: 50),
                       ConsejosDiariosWidget(),
                       const SizedBox(height: 100),
@@ -61,10 +72,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  /// Botón central de escaneo
+  /// Botón central de escaneo (ahora abre HeightWeightScreen)
   ElevatedButton botonCentral() {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () async {
+        // Abrimos la pantalla HeightWeight y esperamos el resultado
+        final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => HeightWeightScreen(userProfileData: _userProfileData),
+          ),
+        );
+
+        // Si hay resultado, actualizamos el estado
+        if (result != null && result is Map<String, dynamic>) {
+          setState(() {
+            _userProfileData = result;
+          });
+        }
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColor.button_primario,
         elevation: 4,
@@ -74,7 +100,6 @@ class _HomePageState extends State<HomePage> {
         'assets/icons/icono_camara.png',
         width: 150,
         height: 150,
-        
       ),
     );
   }
@@ -136,7 +161,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 
 class _CirclesBgPainter extends CustomPainter {
   @override

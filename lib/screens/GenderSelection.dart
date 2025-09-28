@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:victor_appl_maro/screens/HeightWeight.dart';
+
 class GenderSelectionScreen extends StatefulWidget {
-  
   final Map<String, dynamic>? userProfileData;
 
   const GenderSelectionScreen({super.key, this.userProfileData});
@@ -10,7 +10,8 @@ class GenderSelectionScreen extends StatefulWidget {
   State<GenderSelectionScreen> createState() => _GenderSelectionScreenState();
 }
 
-class _GenderSelectionScreenState extends State<GenderSelectionScreen> with SingleTickerProviderStateMixin {
+class _GenderSelectionScreenState extends State<GenderSelectionScreen>
+    with SingleTickerProviderStateMixin {
   String? _selectedGender;
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -35,21 +36,23 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> with Sing
     setState(() {
       _selectedGender = gender;
     });
-    _controller.forward(from: 0.0); 
+    _controller.forward(from: 0.0);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tu Género', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Tu Género',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
-        elevation: 0, 
+        elevation: 0,
       ),
       body: Container(
-       
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.blueAccent, Colors.lightBlueAccent],
@@ -66,12 +69,12 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> with Sing
               children: [
                 const Spacer(),
                 const Text(
-                  '¿Cuál es tu Genero ?',
+                  '¿Cuál es tu Género?',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white, 
+                    color: Colors.white,
                     shadows: [
                       Shadow(
                         blurRadius: 10.0,
@@ -81,40 +84,50 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> with Sing
                     ],
                   ),
                 ),
-                const SizedBox(height: 60), 
-                _buildGenderOption('Masculino', Icons.male, Colors.blue.shade800),
-                const SizedBox(height: 25), 
-                _buildGenderOption('Femenino', Icons.female, Colors.pink.shade800),
-                const Spacer(flex: 2), 
-                ScaleTransition( 
+                const SizedBox(height: 60),
+                _buildGenderOption(
+                    'Masculino', Icons.male, Colors.blue.shade800),
+                const SizedBox(height: 25),
+                _buildGenderOption(
+                    'Femenino', Icons.female, Colors.pink.shade800),
+                const Spacer(flex: 2),
+                ScaleTransition(
                   scale: _animation,
                   child: ElevatedButton(
                     onPressed: _selectedGender != null
                         ? () {
-                           
-                            final userProfileData = widget.userProfileData ?? <String, dynamic>{};
+                            // 1️⃣ Traemos los datos acumulados o creamos un mapa nuevo
+                            final userProfileData =
+                                widget.userProfileData ?? <String, dynamic>{};
 
-                           
+                            // 2️⃣ Guardamos el género
                             userProfileData['gender'] = _selectedGender;
 
-                            
+                            // 3️⃣ Pasamos a la pantalla de Altura/Peso
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HeightWeightScreen(userProfileData: userProfileData),
+                                builder: (context) => HeightWeightScreen(
+                                  userProfileData: userProfileData,
+                                ),
                               ),
                             );
                           }
                         : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: _selectedGender != null ? Colors.white : Colors.blue.shade200, 
-                      foregroundColor: _selectedGender != null ? Colors.blueAccent : Colors.white70,
+                      backgroundColor: _selectedGender != null
+                          ? Colors.white
+                          : Colors.blue.shade200,
+                      foregroundColor: _selectedGender != null
+                          ? Colors.blueAccent
+                          : Colors.white70,
                       padding: const EdgeInsets.symmetric(vertical: 18),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30), 
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      elevation: 8, 
-                      textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      elevation: 8,
+                      textStyle: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     child: const Text('Continuar'),
                   ),
@@ -136,11 +149,13 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> with Sing
         curve: Curves.easeInOut,
         padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
         decoration: BoxDecoration(
-          color: isSelected ? activeColor.withOpacity(0.9) : Colors.white.withOpacity(0.8), 
-          borderRadius: BorderRadius.circular(20), 
+          color: isSelected
+              ? activeColor.withOpacity(0.9)
+              : Colors.white.withOpacity(0.8),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected ? Colors.white : Colors.grey.shade300,
-            width: isSelected ? 4 : 1, 
+            width: isSelected ? 4 : 1,
           ),
           boxShadow: [
             BoxShadow(
@@ -155,14 +170,14 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> with Sing
           children: [
             Icon(
               icon,
-              size: 45, 
-              color: isSelected ? Colors.white : activeColor.withOpacity(0.7), 
+              size: 45,
+              color: isSelected ? Colors.white : activeColor.withOpacity(0.7),
             ),
             const SizedBox(width: 25),
             Text(
               gender,
               style: TextStyle(
-                fontSize: 24, 
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: isSelected ? Colors.white : Colors.black87,
               ),

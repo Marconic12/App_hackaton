@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'WeeklyWorkout.dart'; 
+import 'Age.dart'; 
 
 class HeightWeightScreen extends StatefulWidget {
   
@@ -12,11 +12,20 @@ class HeightWeightScreen extends StatefulWidget {
 }
 
 class _HeightWeightScreenState extends State<HeightWeightScreen> {
-  int _selectedHeight = 170;
-  int _selectedWeight = 70;
+  int? _selectedHeight; 
+  int? _selectedWeight;
 
-  final List<int> _heights = List.generate(101, (index) => 130 + index);
-  final List<int> _weights = List.generate(201, (index) => 30 + index);
+  final List<int> _heights = List.generate(101, (index) => 130 + index); 
+  final List<int> _weights = List.generate(201, (index) => 30 + index); 
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedHeight = null; 
+    _selectedWeight = null; 
+  }
+
+  bool get _isFormValid => _selectedHeight != null && _selectedWeight != null;
 
   @override
   Widget build(BuildContext context) {
@@ -49,34 +58,35 @@ class _HeightWeightScreenState extends State<HeightWeightScreen> {
                   setState(() {
                     _selectedHeight = _heights[index];
                   });
-                }, 'cm'),
+                }, 'cm',
+                initialIndex: _selectedHeight == null ? _heights.indexOf(170) : _heights.indexOf(_selectedHeight!)), 
+
                 _buildPicker('Peso', _weights, _selectedWeight, (index) {
                   setState(() {
                     _selectedWeight = _weights[index];
                   });
-                }, 'kg'),
+                }, 'kg',
+                initialIndex: _selectedWeight == null ? _weights.indexOf(70) : _weights.indexOf(_selectedWeight!)), 
               ],
             ),
             const SizedBox(height: 50),
             ElevatedButton(
-              onPressed: () {
-                
-                
-                final updatedData = Map<String, dynamic>.from(widget.userProfileData);
+              onPressed: _isFormValid
+                  ? () {
+                      final updatedData = Map<String, dynamic>.from(widget.userProfileData);
 
-                
-                updatedData['height'] = _selectedHeight;
-                updatedData['weight'] = _selectedWeight;
-
-                
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => WeeklyWorkoutsScreen(userProfileData: updatedData)),
-                );
-              },
+                      updatedData['height'] = _selectedHeight!; 
+                      updatedData['weight'] = _selectedWeight!; 
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AgeSelectionScreen(userProfileData: updatedData)),
+                      );
+                    }
+                  : null, 
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
                 foregroundColor: Colors.white,
+                disabledBackgroundColor: Colors.grey.shade400, 
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -91,8 +101,8 @@ class _HeightWeightScreenState extends State<HeightWeightScreen> {
     );
   }
 
-  Widget _buildPicker(String label, List<int> values, int selectedValue,
-      Function(int) onSelectedItemChanged, String unit) {
+  Widget _buildPicker(String label, List<int> values, int? selectedValue,
+      Function(int) onSelectedItemChanged, String unit, {required int initialIndex}) {
     return Column(
       children: [
         Text(
@@ -106,18 +116,22 @@ class _HeightWeightScreenState extends State<HeightWeightScreen> {
           decoration: BoxDecoration(
             color: Colors.grey.shade100,
             borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: Colors.blueAccent, width: 2),
+            border: Border.all(
+              color: selectedValue == null ? Colors.redAccent : Colors.blueAccent, 
+              width: 2
+            ),
           ),
           child: ListWheelScrollView.useDelegate(
             itemExtent: 50,
             perspective: 0.005,
             physics: const FixedExtentScrollPhysics(),
             onSelectedItemChanged: onSelectedItemChanged,
+            controller: FixedExtentScrollController(initialItem: initialIndex), 
             childDelegate: ListWheelChildBuilderDelegate(
               childCount: values.length,
               builder: (context, index) {
                 final value = values[index];
-                final isSelected = value == selectedValue;
+                final isSelected = value == selectedValue; 
 
                 return Center(
                   child: AnimatedDefaultTextStyle(
@@ -134,6 +148,14 @@ class _HeightWeightScreenState extends State<HeightWeightScreen> {
             ),
           ),
         ),
+        if (selectedValue == null) 
+          const Padding(
+            padding: EdgeInsets.only(top: 8.0),
+            child: Text(
+              'Selecciona un valor',
+              style: TextStyle(color: Colors.redAccent, fontSize: 12),
+            ),
+          ),
       ],
     );
   }
