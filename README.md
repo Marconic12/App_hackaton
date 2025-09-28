@@ -1,16 +1,32 @@
-# victor_appl_maro
 
-A new Flutter project.
+# App Hackaton
 
-## Getting Started
+Este proyecto es una aplicación desarrollada en Flutter para el hackatón, cuyo propósito es ofrecer una plataforma interactiva y funcional para la gestión de hábitos saludables y rutinas personalizadas.
 
-This project is a starting point for a Flutter application.
+## Propósito
+El objetivo principal es ayudar a los usuarios a mejorar su bienestar mediante el seguimiento de hábitos, consejos personalizados y funcionalidades interactivas.
 
-A few resources to get you started if this is your first Flutter project:
+## Instalación
+1. Clona el repositorio:
+	```powershell
+	git clone https://github.com/Marconic12/App_hackaton.git
+	```
+2. Accede al directorio del proyecto:
+	```powershell
+	cd app_hackaton
+	```
+3. Instala las dependencias:
+	```powershell
+	flutter pub get
+	```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Ejecución
+Para ejecutar la aplicación en modo desarrollo:
+```powershell
+flutter run
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Puedes seleccionar el dispositivo de destino (emulador o físico) desde tu entorno de desarrollo.
+
+---
+Para más información sobre Flutter, consulta la [documentación oficial](https://docs.flutter.dev/).
