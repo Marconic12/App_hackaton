@@ -1,74 +1,78 @@
 import 'package:flutter/material.dart';
+// Importamos AppColor para usar los colores de la paleta
+import 'package:victor_appl_maro/core/app_color.dart';
 
+/// Widget de consejos diarios con el diseño de doble tarjeta.
+/// Ahora contiene el consejo específico de moderar azúcares.
+/// Simula el archivo 'package:victor_appl_maro/components/consejos_wild.dart'
 class ConsejosDiariosWidget extends StatelessWidget {
   const ConsejosDiariosWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.grey.shade300),
+          color: AppColor.darkGreen.withOpacity(0.9), // Color verde oscuro de fondo
+          borderRadius: BorderRadius.circular(20),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: Row(
           children: [
-            // Título con fondo azul y pines
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.push_pin, color: Colors.red),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 8),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.lightBlueAccent,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Text(
-                    'Consejos Diarios',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+            // Botón Consejos Diarios (Tarjeta Izquierda - Color claro)
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: AppColor.accentGreen.withOpacity(0.9),
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: const Text(
+                  'Consejos Diarios',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.darkGreen,
                   ),
                 ),
-                const Icon(Icons.push_pin, color: Colors.red),
-              ],
+              ),
             ),
-            const SizedBox(height: 8),
-            // Cartel rojo con texto
-            Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.red.shade700,
-                    borderRadius: BorderRadius.circular(4),
+            const SizedBox(width: 15),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: const Text(
+                  'Modera el consumo de azúcares añadidos y\nalimentos ultraprocesados.', 
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14, // Ajustado para que el texto quepa bien
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w600, 
                   ),
-                  child: const Text(
-                    'Modera el consumo de azúcares añadidos y\nalimentos ultraprocesados.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white),
-                  ),
                 ),
-                // Simulación de ganchos
-                Positioned(
-                  left: 0,
-                  top: -8,
-                  child: Icon(Icons.circle_outlined,
-                      color: Colors.grey.shade700, size: 20),
-                ),
-                Positioned(
-                  right: 0,
-                  top: -8,
-                  child: Icon(Icons.circle_outlined,
-                      color: Colors.grey.shade700, size: 20),
-                ),
-              ],
+              ),
             ),
           ],
         ),

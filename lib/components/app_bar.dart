@@ -10,7 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
   final TextStyle? defaultTitleStyle;
   
-
+  // Altura aumentada para el diseño original
   static const double customHeight = 80;
 
   const CustomAppBar({
@@ -18,9 +18,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.leading,
     this.actions,
-    this.elevation = 7,
+    this.elevation = 0, // Cambiado a 0 para el diseño plano de la imagen
     this.backgroundColor = const Color.fromARGB(197, 238, 239, 241),
-    this.shadowColor = const Color.fromRGBO(0, 0, 0, 0.25),
+    this.shadowColor = const Color.fromRGBO(0, 0, 0, 0.0), // Sombra minimizada o eliminada
     this.centerTitle = false,
     this.defaultTitleStyle
   });
@@ -32,6 +32,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     Widget styledTitle = title;
 
+    // Lógica original para aplicar estilo al título si es un Text
     if (title is Text && defaultTitleStyle != null) {
       final original = title as Text;
       styledTitle = Text(
@@ -43,6 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       );
     }
 
+    // Usando AppBar estándar dentro del Container para manejar el Stack de la App bar
     return Container(
       height: customHeight,
       decoration: BoxDecoration(
@@ -55,33 +57,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      child: SizedBox(
-        height: customHeight,
-        child: Stack(
-          children: [
-            if (leading != null)
-              Positioned(
-                left: 0,
-                top: 0,
-                bottom: 0,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: leading!,
-                ),
-              ),
-            if (actions != null)
-              Positioned(
-                right: 0,
-                top: 0,
-                bottom: 0,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: actions!,
-                ),
-              ),
-            Center(child: styledTitle),
-          ],
-        ),
+      child: AppBar(
+        // Propiedades adaptadas
+        backgroundColor: backgroundColor,
+        elevation: 0, 
+        automaticallyImplyLeading: false, // Controlamos el leading con nuestro widget
+        title: centerTitle ? Center(child: styledTitle) : styledTitle,
+        leading: leading != null ? Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: leading,
+        ) : null,
+        actions: actions,
       ),
     );
   }

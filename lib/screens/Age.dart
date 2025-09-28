@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart'; 
-import 'WeeklyWorkout.dart'; 
+import 'Condition.dart'; 
 
 class AgeSelectionScreen extends StatefulWidget {
   final Map<String, dynamic> userProfileData;
@@ -130,7 +130,7 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => WeeklyWorkoutsScreen(userProfileData: updatedData)),
+                                builder: (context) => PhysicalConditionScreen(userProfileData: updatedData)),
                           );
                         }
                       : null, // Deshabilita el botón si la edad no está seleccionada

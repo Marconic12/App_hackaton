@@ -1,13 +1,13 @@
 import 'dart:ui';
-
-
 class AppColor {
-  // Background
-  static const Color primary = Color.fromRGBO(152, 251, 152, 1);
-  static const Color secondary = Color.fromARGB(235, 157, 29, 27);
-  static const Color fondito =  Color.fromARGB(235, 79, 187, 241);
-
-  //Buttons
-
-  static const Color button_primario = Color.fromARGB(255, 235, 226, 226);
+  // Color cian brillante para el fondo de la pantalla y la AppBar
+  static const Color background = Color(0xFF66D5E6);
+  // Color verde lima para los acentos y badges (como 'peso actual')
+  static const Color accentGreen = Color(0xFFB8E09B);
+  // Color rojo para el estado de obesidad/alerta
+  static const Color redStatus = Color(0xFFE55C5C);
+  // Color verde oscuro/bosque para la sección de consejos
+  static const Color darkGreen = Color(0xFF387E00);
+  // Color primario de los botones (mantenido del código original, pero no visible en la imagen de fondo)
+  static const Color button_primario = Color(0xFF00ADB5);
 }

@@ -26,15 +26,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       // Datos de la cuenta
       await prefs.setString('user_name', _usernameController.text);
       await prefs.setString('user_email', _emailController.text);
-      // **Nota de seguridad:** Guardar contraseñas en SharedPreferences no es seguro.
-      // Considera usar FlutterSecureStorage o un servicio de autenticación.
       await prefs.setString('user_password', _passwordController.text);
 
-      // Datos del perfil (del flujo Onboarding)
+      // Datos del perfil (flujo Onboarding)
       if (widget.userProfileData.containsKey('gender')) {
         await prefs.setString('user_gender', widget.userProfileData['gender']);
       }
-      // Los datos numéricos deben convertirse al tipo correcto (int/double)
       if (widget.userProfileData.containsKey('height')) {
         await prefs.setInt('user_height', widget.userProfileData['height'] as int);
       }
@@ -54,20 +51,29 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         await prefs.setString('user_motivation', widget.userProfileData['motivation']);
       }
 
+      // Corregido: aseguramos que la lista de condiciones se guarde correctamente
+      if (widget.userProfileData.containsKey('physicalConditions')) {
+        await prefs.setStringList(
+          'user_physical_conditions',
+          widget.userProfileData['physicalConditions'] as List<String>,
+        );
+      }
+
       // Redirigir al Home o Dashboard
       Navigator.pushNamedAndRemoveUntil(
         context,
-        '/main', // Asegúrate de que esta ruta esté definida en tu `MaterialApp`
+        '/main', // Asegúrate de que esta ruta esté definida en tu MaterialApp
         (Route<dynamic> route) => false,
       );
     } else {
       // Mostrar SnackBar si la validación falla
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor, completa todos los campos para crear la cuenta.')),
+        const SnackBar(
+          content: Text('Por favor, completa todos los campos para crear la cuenta.'),
+        ),
       );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +94,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(labelText: "Correo electrónico"),
-              keyboardType: TextInputType.emailAddress, // Mejor práctica para correos
+              keyboardType: TextInputType.emailAddress,
             ),
             TextField(
               controller: _passwordController,

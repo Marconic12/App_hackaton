@@ -39,6 +39,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     const HomePage(),
     const Ajustes(),
     const Center(child: Text("Favoritos", style: TextStyle(fontSize: 24))),
+      const Center(child: Text("Calendario", style: TextStyle(fontSize: 24))),
     const Perfil(), // Aquí reemplazamos el placeholder
   ];
 
@@ -79,7 +80,7 @@ class _MainScaffoldState extends State<MainScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.primary,
+      backgroundColor: AppColor.accentGreen,
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -92,6 +93,7 @@ class _MainScaffoldState extends State<MainScaffold> {
           _navItem(Icons.home, 0, size: 40),
           _navItem(Icons.settings, 1, size: 40),
           _navItem(Icons.calendar_month, 2, size: 40),
+          _navItem(Icons.favorite_border, 3, size: 40),
           _navItem(Icons.lightbulb, 3, size: 40),
         ],
       ),

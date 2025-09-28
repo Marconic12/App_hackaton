@@ -14,7 +14,7 @@ class _PerfilState extends State<Perfil> {
   String _name = 'No especificado';
   String _age = 'No especificado';
   String _email = 'No especificado';
-  String _conditions = 'No especificado';
+  String _conditions = 'No especificado'; // String para mostrar la lista
   String _gender = 'No especificado';
   String _activityLevel = 'No especificado';
   String _goal = 'No especificado';
@@ -22,16 +22,22 @@ class _PerfilState extends State<Perfil> {
   @override
   void initState() {
     super.initState();
-    _loadProfileData(); 
+    _loadProfileData();
   }
 
   Future<void> _loadProfileData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _name = prefs.getString('user_name') ?? 'No especificado';
-      _age = (prefs.getInt('user_age')?.toString() ?? 'No especificado');
+      _age = prefs.getInt('user_age')?.toString() ?? 'No especificado';
       _email = prefs.getString('user_email') ?? 'No especificado';
-      _conditions = prefs.getString('user_conditions') ?? 'No especificado';
+
+      // ✅ Recuperamos la lista de condiciones correctamente
+      final conditionsList = prefs.getStringList('user_physical_conditions');
+      _conditions = conditionsList != null && conditionsList.isNotEmpty
+          ? conditionsList.join(', ')
+          : 'Ninguna / No especificado';
+
       _gender = prefs.getString('user_gender') ?? 'No especificado';
       _activityLevel = prefs.getString('user_activity_level') ?? 'No especificado';
       _goal = prefs.getString('user_goal') ?? 'No especificado';
@@ -41,7 +47,7 @@ class _PerfilState extends State<Perfil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.fondito,
+      backgroundColor: AppColor.background,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -57,7 +63,6 @@ class _PerfilState extends State<Perfil> {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      
                       _buildGreenTitleBox("Información Personal"),
                       const SizedBox(height: 10),
                       Row(
@@ -69,33 +74,48 @@ class _PerfilState extends State<Perfil> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _buildInfoField(title: "Nombre", value: _name, icon: Icons.badge_outlined),
-                                _buildInfoField(title: "Correo Electrónico", value: _email, icon: Icons.email_outlined),
-                                _buildInfoField(title: "Edad", value: _age, icon: Icons.cake_outlined),
-                                _buildInfoField(title: "Sexo", value: _gender, icon: Icons.wc_outlined),
-                                _buildInfoField(title: "Condiciones de Salud", value: _conditions, icon: Icons.medical_services_outlined),
+                                _buildInfoField(
+                                    title: "Nombre",
+                                    value: _name,
+                                    icon: Icons.badge_outlined),
+                                _buildInfoField(
+                                    title: "Correo Electrónico",
+                                    value: _email,
+                                    icon: Icons.email_outlined),
+                                _buildInfoField(
+                                    title: "Edad",
+                                    value: _age,
+                                    icon: Icons.cake_outlined),
+                                _buildInfoField(
+                                    title: "Sexo",
+                                    value: _gender,
+                                    icon: Icons.wc_outlined),
+                                _buildInfoField(
+                                    title: "Condiciones de Salud",
+                                    value: _conditions,
+                                    icon: Icons.medical_services_outlined),
                               ],
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
-                      
-                     
+
                       _buildGreenTitleBox("Estado Físico"),
                       const SizedBox(height: 30),
                       _buildSectionWithAsset(
                         assetPath: 'assets/icons/runner.png',
                         children: [
-                          _buildInfoField(title: "Nivel de Actividad", value: _activityLevel, icon: Icons.run_circle_outlined),
+                          _buildInfoField(
+                              title: "Nivel de Actividad",
+                              value: _activityLevel,
+                              icon: Icons.run_circle_outlined),
                         ],
                       ),
                       const SizedBox(height: 20),
 
-                      
                       _buildGreenTitleBox("Objetivo"),
                       const SizedBox(height: 30),
-                      
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -105,7 +125,10 @@ class _PerfilState extends State<Perfil> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _buildInfoField(title: "Objetivo", value: _goal, icon: Icons.track_changes_outlined),
+                                _buildInfoField(
+                                    title: "Objetivo",
+                                    value: _goal,
+                                    icon: Icons.track_changes_outlined),
                               ],
                             ),
                           ),
@@ -134,12 +157,11 @@ class _PerfilState extends State<Perfil> {
     );
   }
 
-  
   Widget _buildGreenTitleBox(String title) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
       decoration: BoxDecoration(
-        color: AppColor.primary,
+        color: AppColor.accentGreen,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Text(
@@ -154,7 +176,6 @@ class _PerfilState extends State<Perfil> {
     );
   }
 
- 
   Widget _buildSectionWithAsset({
     required String assetPath,
     required List<Widget> children,
@@ -173,9 +194,9 @@ class _PerfilState extends State<Perfil> {
       ],
     );
   }
-  
- 
-  Widget _buildInfoField({required String title, required String value, required IconData icon}) {
+
+  Widget _buildInfoField(
+      {required String title, required String value, required IconData icon}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
