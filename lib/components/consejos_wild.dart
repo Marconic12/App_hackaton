@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-// Importamos AppColor para usar los colores de la paleta
 import 'package:victor_appl_maro/core/app_color.dart';
 
-/// Widget de consejos diarios con el diseño de doble tarjeta.
-/// Ahora contiene el consejo específico de moderar azúcares.
-/// Simula el archivo 'package:victor_appl_maro/components/consejos_wild.dart'
 class ConsejosDiariosWidget extends StatelessWidget {
   const ConsejosDiariosWidget({super.key});
 
@@ -15,12 +11,11 @@ class ConsejosDiariosWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColor.darkGreen.withOpacity(0.9), // Color verde oscuro de fondo
+          color: AppColor.darkGreen.withOpacity(0.9),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           children: [
-            // Botón Consejos Diarios (Tarjeta Izquierda - Color claro)
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(20),
@@ -67,7 +62,7 @@ class ConsejosDiariosWidget extends StatelessWidget {
                   'Modera el consumo de azúcares añadidos y\nalimentos ultraprocesados.', 
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 14, // Ajustado para que el texto quepa bien
+                    fontSize: 14,
                     color: Colors.black87,
                     fontWeight: FontWeight.w600, 
                   ),

@@ -14,7 +14,7 @@ class WelcomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              // Título
+
               const Text(
                 '¡Bienvenido!',
                 style: TextStyle(
@@ -27,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-              // Subtítulo
+
               const Text(
                 'Encuentra tus favoritos y conecta con otros',
                 style: TextStyle(
@@ -39,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
 
               const SizedBox(height: 50),
 
-              // Botón de "Empezar"
+     
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -62,7 +62,7 @@ class WelcomeScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // Texto con hipervínculo para "Iniciar sesión"
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -72,8 +72,6 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      // Acción para ir a la pantalla de inicio de sesión
-                      // Navigator.pushNamed(context, '/login');
                       print('Iniciar sesión');
                     },
                     child: const Text(

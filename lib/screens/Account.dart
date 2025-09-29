@@ -16,19 +16,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final _passwordController = TextEditingController();
 
   Future<void> _saveUserData() async {
-    // 1. VALIDACIÓN: Comprobar que los campos de la cuenta no estén vacíos.
     if (_usernameController.text.isNotEmpty &&
         _emailController.text.isNotEmpty &&
         _passwordController.text.isNotEmpty) {
       
       final prefs = await SharedPreferences.getInstance();
-
-      // Datos de la cuenta
       await prefs.setString('user_name', _usernameController.text);
       await prefs.setString('user_email', _emailController.text);
       await prefs.setString('user_password', _passwordController.text);
-
-      // Datos del perfil (flujo Onboarding)
       if (widget.userProfileData.containsKey('gender')) {
         await prefs.setString('user_gender', widget.userProfileData['gender']);
       }
@@ -50,8 +45,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       if (widget.userProfileData.containsKey('motivation')) {
         await prefs.setString('user_motivation', widget.userProfileData['motivation']);
       }
-
-      // Corregido: aseguramos que la lista de condiciones se guarde correctamente
       if (widget.userProfileData.containsKey('physicalConditions')) {
         await prefs.setStringList(
           'user_physical_conditions',
@@ -59,14 +52,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         );
       }
 
-      // Redirigir al Home o Dashboard
       Navigator.pushNamedAndRemoveUntil(
         context,
-        '/main', // Asegúrate de que esta ruta esté definida en tu MaterialApp
+        '/main', 
         (Route<dynamic> route) => false,
       );
     } else {
-      // Mostrar SnackBar si la validación falla
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Por favor, completa todos los campos para crear la cuenta.'),

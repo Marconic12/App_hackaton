@@ -15,7 +15,7 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
   int? _selectedAge; // 
   final List<int> _ages = List.generate(83, (index) => 1 + index);
 
-  // Helper para verificar si la edad ha sido seleccionada
+  
   bool get _isAgeSelected => _selectedAge != null;
 
   @override
@@ -27,16 +27,16 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
         backgroundColor: Colors.blueAccent, 
         foregroundColor: Colors.white,
       ),
-      body: FadeInUp( // Animación de entrada para toda la pantalla
+      body: FadeInUp( 
         duration: const Duration(milliseconds: 600),
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Pulse( // Animación para el texto principal
+              Pulse( 
                 duration: const Duration(milliseconds: 1000),
-                infinite: false, // Pulso continuo
+                infinite: false, 
                 child: const Text(
                   '¿Cuántos años tienes?',
                   textAlign: TextAlign.center,
@@ -48,7 +48,7 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
                 ),
               ),
               const SizedBox(height: 60),
-              BounceInDown( // Animación para el selector de edad
+              BounceInDown( 
                 duration: const Duration(milliseconds: 800),
                 child: Container(
                   width: 150,
@@ -78,7 +78,7 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
                         _selectedAge = _ages[index];
                       });
                     },
-                    // Centra en la edad inicial (por ejemplo, 30 años)
+              
                     controller: FixedExtentScrollController(
                       initialItem: _ages.indexOf(30) > -1 ? _ages.indexOf(30) : 0,
                     ),
@@ -104,9 +104,9 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
                   ),
                 ),
               ),
-              // Mensaje de advertencia si no se ha seleccionado nada
+             
               if (_selectedAge == null)
-                SlideInLeft( // Animación para el mensaje de advertencia
+                SlideInLeft( 
                   duration: const Duration(milliseconds: 500),
                   child: const Padding(
                     padding: EdgeInsets.only(top: 15.0),
@@ -117,23 +117,23 @@ class _AgeSelectionScreenState extends State<AgeSelectionScreen> {
                   ),
                 ),
               const SizedBox(height: 60),
-              ZoomIn( // Animación para el botón
+              ZoomIn( 
                 duration: const Duration(milliseconds: 700),
                 child: ElevatedButton(
                   onPressed: _isAgeSelected
                       ? () {
-                          // Solo avanza si la edad ha sido seleccionada
+                         
                           final updatedData = Map<String, dynamic>.from(widget.userProfileData);
                           updatedData['age'] = _selectedAge!;
 
-                          // Navega a la siguiente pantalla (por ejemplo, WeeklyWorkoutsScreen)
+                        
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => PhysicalConditionScreen(userProfileData: updatedData)),
                           );
                         }
-                      : null, // Deshabilita el botón si la edad no está seleccionada
+                      : null, 
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
                     foregroundColor: Colors.white,

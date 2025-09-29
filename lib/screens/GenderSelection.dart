@@ -96,14 +96,14 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen>
                   child: ElevatedButton(
                     onPressed: _selectedGender != null
                         ? () {
-                            // 1️⃣ Traemos los datos acumulados o creamos un mapa nuevo
+                           
                             final userProfileData =
                                 widget.userProfileData ?? <String, dynamic>{};
 
-                            // 2️⃣ Guardamos el género
+                           
                             userProfileData['gender'] = _selectedGender;
 
-                            // 3️⃣ Pasamos a la pantalla de Altura/Peso
+                          
                             Navigator.push(
                               context,
                               MaterialPageRoute(

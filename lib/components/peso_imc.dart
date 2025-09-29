@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-// Importamos AppColor para usar los colores de la paleta
 import 'package:victor_appl_maro/core/app_color.dart';
-
-// -----------------------------------------------------------------------------
-// Widgets Auxiliares
-// -----------------------------------------------------------------------------
-
-/// Widget auxiliar para los pequeños círculos de la leyenda
 class _LegendItem extends StatelessWidget {
   final Color color;
   final String text;
@@ -32,7 +25,6 @@ class _LegendItem extends StatelessWidget {
   }
 }
 
-/// Widget auxiliar para el badge flotante "peso actual"
 class _GreenBadge extends StatelessWidget {
   final String text;
   const _GreenBadge({required this.text});
@@ -63,14 +55,6 @@ class _GreenBadge extends StatelessWidget {
     );
   }
 }
-
-// -----------------------------------------------------------------------------
-// Componente Principal PesoVisualizer (Lógica + Diseño)
-// -----------------------------------------------------------------------------
-
-/// Componente que visualiza y permite ajustar el peso y la altura,
-/// calcula el IMC y gestiona un historial.
-/// Simula el archivo 'package:victor_appl_maro/components/peso_imc.dart'
 class PesoVisualizer extends StatefulWidget {
   final Map<String, dynamic> userProfileData;
 
@@ -195,18 +179,18 @@ class _PesoVisualizerState extends State<PesoVisualizer> {
                           width: 15,
                           height: 15,
                           decoration: BoxDecoration(
-                            color: categoriaColor, // Color dinámico
+                            color: categoriaColor,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          categoria, // Categoría dinámica
+                          categoria, 
                           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                         const Spacer(),
                         Text(
-                          'IMC: ${imc.toStringAsFixed(1)}', // IMC dinámico
+                          'IMC: ${imc.toStringAsFixed(1)}', 
                           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black54),
                         ),
                       ],
@@ -214,8 +198,6 @@ class _PesoVisualizerState extends State<PesoVisualizer> {
                   ),
                 ),
                 const SizedBox(height: 15),
-
-                // 3. Leyenda (Diseño de la imagen)
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -227,7 +209,7 @@ class _PesoVisualizerState extends State<PesoVisualizer> {
                 ),
                 const Divider(height: 25, color: Colors.grey),
 
-                // 4. Sliders (Lógica del usuario)
+
                 Text(
                   "Peso: ${pesoKg.toStringAsFixed(1)} kg",
                   style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -255,8 +237,6 @@ class _PesoVisualizerState extends State<PesoVisualizer> {
                 ),
 
                 const SizedBox(height: 16),
-
-                // Botón de guardar
                 ElevatedButton.icon(
                   onPressed: guardarRegistro,
                   icon: const Icon(Icons.save),
@@ -270,8 +250,6 @@ class _PesoVisualizerState extends State<PesoVisualizer> {
                 ),
 
                 const SizedBox(height: 20),
-
-                // Historial
                 if (historial.isNotEmpty) ...[
                   const Text("Historial de registros:",
                       style: TextStyle(
@@ -300,7 +278,7 @@ class _PesoVisualizerState extends State<PesoVisualizer> {
               ],
             ),
           ),
-          // Badge "peso actual" (Diseño de la imagen)
+
           const Positioned(
             top: 0,
             child: _GreenBadge(text: 'peso actual'),

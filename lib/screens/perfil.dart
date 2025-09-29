@@ -10,11 +10,11 @@ class Perfil extends StatefulWidget {
 }
 
 class _PerfilState extends State<Perfil> {
-  // Inicializamos las variables con valores por defecto
+
   String _name = 'No especificado';
   String _age = 'No especificado';
   String _email = 'No especificado';
-  String _conditions = 'No especificado'; // String para mostrar la lista
+  String _conditions = 'No especificado'; 
   String _gender = 'No especificado';
   String _activityLevel = 'No especificado';
   String _goal = 'No especificado';
@@ -32,7 +32,7 @@ class _PerfilState extends State<Perfil> {
       _age = prefs.getInt('user_age')?.toString() ?? 'No especificado';
       _email = prefs.getString('user_email') ?? 'No especificado';
 
-      // ✅ Recuperamos la lista de condiciones correctamente
+      
       final conditionsList = prefs.getStringList('user_physical_conditions');
       _conditions = conditionsList != null && conditionsList.isNotEmpty
           ? conditionsList.join(', ')

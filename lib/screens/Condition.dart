@@ -21,13 +21,9 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
     'Hipertensión',
     'Ninguna'
   ];
-  // *** CAMBIO REALIZADO AQUÍ (Línea 26) ***
-  // Inicializa con "Ninguna" para que el botón esté activo por defecto.
-  final Set<String> _selectedConditions = {'Ninguna'}; 
-  
-  final TextEditingController _otherConditionController = TextEditingController();
 
-  // El getter se mantiene igual
+  final Set<String> _selectedConditions = {'Ninguna'}; 
+  final TextEditingController _otherConditionController = TextEditingController();
   bool get _isConditionSelected => 
     _selectedConditions.isNotEmpty || _otherConditionController.text.trim().isNotEmpty;
 
@@ -58,7 +54,7 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
   }
 
   void _navigateToNextScreen() {
-    // 1. Recopilar datos finales
+
     final List<String> finalConditions = List.from(_selectedConditions);
     final String otherCondition = _otherConditionController.text.trim();
 
@@ -66,11 +62,11 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
       finalConditions.add('Otro: $otherCondition');
     }
 
-    // 2. Actualizar el perfil del usuario
+  
     final updatedData = Map<String, dynamic>.from(widget.userProfileData);
     updatedData['physicalConditions'] = finalConditions;
 
-    // 3. Navegar a la pantalla final
+ 
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -88,7 +84,7 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
       ),
-      body: FadeInRight( // Animación de entrada
+      body: FadeInRight( 
         duration: const Duration(milliseconds: 700),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
@@ -123,7 +119,7 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
               
               const SizedBox(height: 40),
 
-              // Botones de Opciones Comunes
+          
               Pulse(
                 duration: const Duration(milliseconds: 1000),
                 delay: const Duration(milliseconds: 500),
@@ -158,7 +154,7 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
               
               const SizedBox(height: 50),
 
-              // Campo de Texto para Otras Condiciones
+             
               SlideInLeft(
                 delay: const Duration(milliseconds: 700),
                 child: TextField(
@@ -188,7 +184,7 @@ class _PhysicalConditionScreenState extends State<PhysicalConditionScreen> {
               
               const SizedBox(height: 60),
 
-              // Botón de Continuar
+            
               BounceInUp(
                 delay: const Duration(milliseconds: 900),
                 child: ElevatedButton(

@@ -49,15 +49,15 @@ class _MainScaffoldState extends State<MainScaffold> {
     });
   }
 
-  // Altura personalizada más pequeña para la barra de navegación
-  static const double _customBarHeight = 50.0; // ¡Cambiado de kBottomNavigationBarHeight (56.0) a 50.0!
+
+  static const double _customBarHeight = 50.0; // 
 
   BottomNavigationBarItem _navItem(IconData icon, int index, {double size = 15}) {
     final bool isSelected = _selectedIndex == index;
 
     return BottomNavigationBarItem(
       icon: SizedBox(
-        height: _customBarHeight, // <-- Se usa la altura personalizada
+        height: _customBarHeight, 
         child: Container(
           alignment: Alignment.center,
           margin: const EdgeInsets.symmetric(horizontal: 1),
@@ -93,11 +93,11 @@ class _MainScaffoldState extends State<MainScaffold> {
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
         items: [
-          _navItem(Icons.home, 0, size: 24), // Reducido el tamaño del ícono
-          _navItem(Icons.settings, 1, size: 24), // Reducido el tamaño del ícono
-          _navItem(Icons.calendar_month, 2, size: 24), // Reducido el tamaño del ícono
-          _navItem(Icons.favorite_border, 3, size: 24), // Reducido el tamaño del ícono
-          _navItem(Icons.person, 4, size: 24), // IMPORTANTE: El índice de Perfil es 4
+          _navItem(Icons.home, 0, size: 24), 
+          _navItem(Icons.settings, 1, size: 24), 
+          _navItem(Icons.calendar_month, 2, size: 24), 
+          _navItem(Icons.favorite_border, 3, size: 24), 
+          _navItem(Icons.person, 4, size: 24), 
         ],
       ),
     );
